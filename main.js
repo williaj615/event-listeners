@@ -19,19 +19,45 @@ const favoritePies = [
 ];
 
 const printToDom = (toPrint, divId) => {
-    document.getElementById(divId).innerHTML += toPrint
+    document.getElementById(divId).innerHTML = toPrint
 }
 
 const printFavPies = (pieArr) => {
+        let domString = ''
     for (let i = 0; i < pieArr.length; i++){
         const pie = pieArr[i];
-        const domString = `
+         domString += `
         <div class="card">
             <h2>${pie.pieName}</h2>
             <img src=${pie.pieImage} alt='Image of ${pie.pieName}'
         </div>`
-        printToDom(domString, 'pie-stuff')
     }
+    printToDom(domString, 'pie-stuff')
 }
 
-printFavPies(favoritePies);
+const buttonClick = (e) => {
+    //figure out who the instructor is for the button we clicked
+    const instructor = e.target.id
+    const selectedPies = []
+    //then figure out how to only get those pies from the list of all the pies
+    for (let i = 0; i < favoritePies.length; i++) {
+        const pie = favoritePies[i]
+        if (pie.instructor === instructor) {
+            selectedPies.push(pie)
+        }
+    }  
+    //then pass small list of pies back into the pie builder
+    printFavPies(selectedPies);
+    }
+    
+
+document.getElementById('zoe').addEventListener('click', buttonClick) 
+
+document.getElementById('michael').addEventListener('click', buttonClick)
+
+
+document.getElementById('callan').addEventListener('click', buttonClick)
+
+
+
+    // this is the original call before event listeners --> printFavPies(favoritePies)
